@@ -1,0 +1,188 @@
+[[[ ID ]]]
+277
+[[[ INDEX ]]]
+0
+[[[ TITLE ]]]
+Low-rank Matrix Recovery from Errors and Erasures
+[[[ AUTHORS ]]]
+Yudong Chen
+Ali Jalali
+Sujay Sanghavi
+Constantine Caramanis
+[[[ ABSTR ]]]
+Abstract—This paper considers the recovery of a low-rank matrix from an observed version that simultaneously contains both (a) erasures: most entries are not observed, and (b) er- rors: values at a constant fraction of (unknown) locations are arbitrarily corrupted. We provide a new uniﬁed performance guarantee on when a (natural) recently proposed method, based on convex optimization, succeeds in exact recovery. Our result allows for the simultaneous presence of random and deterministic components in both the error and erasure patterns. On the one hand, corollaries obtained by specializing this one single result in different ways recovers (upto poly-log factors) all the existing works in matrix completion, and sparse and low-rank matrix recovery. On the other hand, our results also provide the ﬁrst guarantees for (a) deterministic matrix completion, and (b) recovery when we observe a vanishing fraction of entries of a corrupted matrix.
+[[[ BODY ]]]
+Low-rank matrices play a central role in large-scale data analysis and dimensionality reduction. They arise in a variety of application areas, among them Principal Component Anal- ysis (PCA) [1], [2], [3], Multi-dimensional scaling (MDS), Correlation Clustering [4], [5], Spectral Clustering and related methods [6], [7], ranking and collaborative ﬁltering [8], [9], etc. In all these problems, low-rank structure is used to either approximate a general matrix, or to correct for corrupted or missing data.
+This paper considers the recovery of a low-rank matrix in the simultaneous presence of (a) erasures: most elements are not observed, and (b): errors: among the ones that are observed, a signiﬁcant fraction at unknown locations are grossly/maliciously corrupted. It is now well recognized that the standard, popular approach to low-rank matrix recovery using SVD as a ﬁrst step fails spectacularly in this setting [10]. Low-rank matrix completion, which considers only ran- dom erasures ([11], [12]) will also fail with even just a few maliciously corrupted entries. In light of this, several recent works have studied an alternate approach based on a (now natural) convex optimization problem. One approach [13], [14] provides deterministic/worst case guarantees for the fully observed setting (i.e. only errors). Another avenue [15], [1] provides probabilistic guarantees for the case when the supports of the error and erasure patterns are chosen uniformly
+at random. Our work provides (often order-wise) stronger guarantees on the performance of this convex formulation, as compared to all of these papers.
+We present one main result, and two other theorems. Our main result, Theorem 1, is a uniﬁed performance guarantee that allows for the simultaneous presence of both errors and erasures, and deterministic and random support patterns for each. In order/scaling terms, this single result recovers as corollaries all the existing results on low-rank matrix comple- tion [11], [12], worst-case error patterns [13], and random error and erasure patterns [15], [1]; we provide detailed comparisons in Section II. More signiﬁcantly, our result goes beyond the existing literature by providing the ﬁrst guarantees for random support patterns for the case when the fraction of entries observed vanishes as n (the size of the problem) grows – an important regime in many applications, including collaborative ﬁltering. In particular, we show that exact recovery is possible with as few as Θ( n log 4 n) entries, even when a constant fraction of these entries are errors.
+Theorem 2 is also a uniﬁed guarantee, but with the addi- tional assumption that the signs of the error matrix are equally likely to be positive or negative. We are now able to show that it is possible to recover the low-rank matrix even when almost all entries are corrupted. Again, our results go beyond the existing work [15] on this case, because we allow for a vanishing fraction of observations.
+Theorem 3 concentrates on the deterministic/worst-case analysis, providing the ﬁrst guarantees when there are both errors and erasures. Its specialization to the erasures-only case provides the ﬁrst deterministic guarantees for low-rank matrix completion (where existing work [11], [12] has con- centrated on randomly located observations). Specialization to the errors-only case provides an order improvement over the previous deterministic results in [13], and matches the scaling of [14] but with a much simpler proof.
+Besides improving on known guarantees, all our results involve several technical innovations beyond existing proofs. Several of these innovations may be of interest in their own right, for other related high-dimensional problems.
+The problem: Suppose matrix C ∈ R n 1 ×n 2 is the sum of an underlying low-rank matrix B ∗ ∈ R n 1 ×n 2 and a sparse “errors” matrix A ∗ ∈ R n 1 ×n 2 . Neither the number, locations or values of A ∗ are known a-priori; indeed by “sparse” we just mean that it A ∗ has at least a constant fraction of its entries being 0 – it is allowed to have a signiﬁcant fraction of its entries being non-0 as well. We consider the following problem: suppose we only observe a subset Ω obs ⊂ [n 1 ] ×[n 2 ] of the entries of C; the remaining entries are erased. When and how can we exactly recover B ∗ ? (and, by simple implication, the entries of A ∗ that are in Ω obs )
+The Algorithm: In this paper we are interested in the perfor- mance of the following convex program
+where the notation is that for any matrix M , M ∗ = i σ i (M) is the nuclear norm, deﬁned to be the
+sum of the singular values of the matrix, M 1 = i,j |a ij | is the elementwise 1 norm, and P Ω obs (M) is the set of elements of M that are in the observed set Ω obs . Intuitively, the nuclear norm acts as a convex surrogate for the rank of a matrix, and 1 norm as a convex surrogate for its sparsity.
+Incoherence: We are interested in characterizing when the optimum of (1) recovers the underlying (observed) truth, i.e., when ( P Ω obs ( ˆ A), ˆ B) = (P Ω obs (A ∗ ) , B ∗ ). Clearly, not all low- rank matrices B ∗ can be recovered exactly; in particular, if B ∗ is both low-rank and sparse, it would be impossible to unambiguously identify it from an added sparse matrix. To prevent such a scenario, we follow the approach taken in all the recent work [13], [1], [11], [12], [16] and deﬁne incoherence parameters for B ∗ . Suppose the matrix B ∗ with rank r ≤ min (n 1 , n 2 ) has the singular value decomposition U ΣV ∗ , where U ∈ R n 1 ×r , V ∈ R n 2 ×r and Σ ∈ R r×r . We say a given matrix B ∗ is ( r, μ)-incoherent for some r ∈ {1, · · ·, min(n 1 , n 2 )} and μ ∈ 1, max(n 1 ,n 2 ) r 	 iff (i) rank(B ∗ ) = r, and, (ii)
+where, e i ’s are standard basis vectors with proper length. Here · represents the 2-norm of the vector.
+Our ﬁrst main result is a uniﬁed guarantee that allows for the simultaneous presence of random and adversarial patterns, for both errors and erasures. As mentioned in the introduction, this
+recovers all existing results in matrix completion, and sparse and low-rank matrix decomposition, up to constants or log factors. We now deﬁne three bound quantities: p 0 , τ and d.
+Let Ω obs, d be any (i.e. deterministic) set of observed entries, and additionally let Ω obs, r be a randomly chosen set such that each element is in Ω obs, r with probability at least p 0 . Thus, the overall set of observed entries is Ω obs = Ω obs, r ∩ Ω obs, d . Let Ω = Ω r ∪Ω d be the support of A ∗ , again composed of the union of a deterministic component Ω d , and a random component Ω r generated by having each element be in Ω r independently with probability at most τ . Finally, consider the union Ω c obs, d ∪ Ω d of all deterministic errors and erasures, and let d be an upper bound on the maximum number of elements this set has in any row, or in any column.
+Theorem 1. Set n = min{n 1 , n 2 }. There exist constants c, ρ r , ρ s and ρ d – each independent of n – such that, with probability greater than 1 −cn −10 , the unique optimal solution of (1) with γ = 	 1 32 √ p 0 n(d+1) is equal to ( P Ω obs (A ∗ ), B ∗ ) provided that
+log 3 n τ ≤ ρ s
+Remark. The conclusion of the theorem holds for a range of values of γ. We have chosen one of these valid values. Moreover, in the theorem one can replace p 0 (d) with any lower-bound (upper-bound) of it.
+Remark. It is possible to remove some of the logarithmic factors in the above bounds. We choose not to dwell on such reﬁnements due to space limit.
+If we further assume the errors in the entries in Ω r have random signs, then one can recover from a overwhelming fraction of corruptions.
+Theorem 2. Under the same setup of Theorem 1, further assume that the signs of entries of A ∗ in Ω r are symmetric Bernoulli random variables. Then there exist constants ρ r and ρ d such that, with probability at least 1 − cn −10 , the unique optimal solution of (1) with γ = 	 1 32 √ p
+is equal to (P Ω obs (A ∗ ), B ∗ ) provided that
+Remark. We would like to point out that in the theorem, p 0 can approach zero faster than 1 − τ; this agrees with the intuition that correcting erasures with known locations is easier than correcting errors with unknown locations.
+Remark. Again, it is possible to remove some of the logarith- mic factors in the above bounds.
+Comparison with previous work We compare Theorem 1 and 2 with existing results. [1] provides guarantees for random errors and erasures. Their guarantees require that τ = O(1) and p 0 = Ω(1). This is later extended in [15], which shows that τ can be a constant arbitrarily close to 1 provided A ∗ has random signs and n is sufﬁciently large. Here Theorem 1 and 2 provide stronger results, as both allow p 0 to be vanishingly small, in particular, Θ log 3 n n 	 (the proof techniques used in [1] and [15] do not seem to be able to cover this case, even when the rank is small). Moreover, when A ∗ has random signs, Theorem 2 gives explicit scaling between τ and n as τ = O 1 − log 3 n n , with γ independent of the usually unknown quantity τ . In contrast, [15] requires τ ≤ f (n) for some unspeciﬁed function f (·), and uses a τ -dependent γ.
+Deterministic errors are ﬁrst studied in [13], [17], which stipulate d = O 	 n μr . Theorem 1 and 2 improve this bound
+to d = O 	 n μr log 2 n . In the next sub-section, we provide a more reﬁned analysis for the deterministic case, which gives d = O n μr . As this manuscript was being prepared, we learned of an independent investigation of the deterministic case [14], which gives similar guarantees. Our results also handle the case of partial observations, which is not discussed in previous works [13], [17], [14].
+Previous work in low-rank matrix completion deals with the case when there are no errors or deterministic erasure (i.e., d, τ = 0). For this problem, Theorem 1 recovers the best existing bound p 0 = O μr log 2 n n 	 in [12], [16], [18]. Our theorem also provides the ﬁrst guarantee for deterministic matrix completion under potentially adversarial erasures.
+One prominent feature of our guarantees is that we allows adversarial and random erasures/errors to exist simultaneously. To the best of our knowledge, this is the ﬁrst such result in low-rank matrix recovery/robust PCA.
+Our second main result deals with the case where the errors and erasures are arbitrary but ﬁxed. As discussed in [13], for the exact recovery, the error matrix A ∗ needs to be not only sparse but also ”spread out”, i.e. to not have any row or column with too many non-zero entries. The same holds for unobserved entries. Correspondingly, we require the following: (i) there are at most d errors and erasures on each row/column, and, (ii) A ∗ ≤ ηd A ∗ ∞ ; where
+A ∗ = σ max (A ∗ ) is the operator norm of the matrix and is deﬁned to be the largest singular value of the matrix and A ∗ ∞ = max i,j |a ∗ ij | is the element-wise maximum magnitude of the elements of the matrix.
+where, α = μrd n 1 + μrd n 2 . Then, the solution to the problem (1) is unique and equal to ( P Ω obs (A ∗ ), B ∗ ).
+d in their bound. This improvement is achieved by a different construction of dual variable presented in this paper.
+Remark. If ηd 	 μr min(n 1 ,n 2 ) ≤ 1 6 (the condition provided for exact recovery in [13]) is satisﬁed then the condition of Theorem 3 is satisﬁed as well. This shows that our result is an improvement to the result in [13] in the sense that this result guarantees the recovery of a larger set of matrices A ∗ and B ∗ . Moreover, this bound implies that n (for square matrices) should scale with dr which is another improvement compare to the d 2 r scaling in [13].
+Remark. This theorem provides the same scaling result for d in terms of r and n as the result of [14]. However, our assumptions are closer to existing ones in matrix completion and sparse and low-rank decomposition papers [11], [12], [1], [13].
+In a high level, the proof is along the same lines of those in the low-rank matrix recovery literature [1], [11], [16] and is consist of two steps: (a) write down the ﬁrst-order sufﬁcient condition for ( P Ω obs (A ∗ ), B ∗ ) to be the unique solution to (1), which involves the existence of a dual certiﬁcate, (b) construct the dual certiﬁcate and show that it has the desired property.
+To state the optimality condition in step (a), we need to introduce some notations. Deﬁne the support of A ∗ as Ω = {(i, j) : A ∗ i,j = 0}. The orthogonal projection of a matrix M ∈ R n 1 ×n 2 to Ω is the matrix whose ( i, j) th entry is given by
+Let Γ = Ω obs /Ω be the set of observed and clean entries; then Γ c is the set of corrupted or unobserved entries. P Γ and P Γ c are deﬁned accordingly. Set E ∗ := P Ω obs (sgn(A ∗ )), where sgn(·) is the element-wise signum function. We also deﬁne a sub-space T of the span of all matrices that share either the same column space or the same row space as B ∗ :
+For any matrix M ∈ R n 1 ×n 2 , we can deﬁne its orthogonal projection to the space T as follows:
+We also deﬁne the projections onto T ⊥ , the complement orthogonal space of T , as follows:
+In the sequel, by with high probability we mean with proba- bility at least 1 − c min{n 1 , n 2 } −10 . The optimality condition is given in the following lemma.
+Lemma 1. Assume that P T P Γ ⊥ M F ≤ n P T ⊥ P Γ ⊥ M F for any matrix. Suppose γ < 1. Then (P Ω obs (A ∗ ), B ∗ ) is the unique solution if there is a dual certiﬁcate Q obeying
+The second step, constructing the desired Q, is the “art” of the proof: a new dual certiﬁcate and a new proof of it are needed to handle dense erasures/errors and the co-existence of deterministic and random components. We will do so using a variation of the so-called Golﬁng Scheme [16], [18]; details can be found in the full version of our paper [19].
+The proof follows along the lines of that in [13] and has three steps: (a) writing down a sufﬁcient optimality condition, stated in terms of a dual certiﬁcate, for ( P Ω obs (A ∗ ), B ∗ ) to be the optimum of the convex program (1), (b) constructing a particular candidate dual certiﬁcate, and, (c) showing that under the imposed conditions this candidate does indeed certify that ( P Ω obs (A ∗ ), B ∗ ) is the optimum. Part (b) is the ”art” in this method; different ways to devise dual certiﬁcates can yield different sufﬁcient conditions for exact recovery. Indeed this is the main difference between this paper and [13]. The details of the proof can be found in the full version of our paper [19].
+For the sake of completeness, we restate here a ﬁrst-order sufﬁcient condition for ( P Ω obs (A ∗ ), B ∗ ) to be the optimum of (1). The proof is almost identical to that in [13]; only minor change is needed to handle erasures.
+Lemma 2 (A Sufﬁcient Optimality Condition [13]). The pair ( P Ω obs (A ∗ ), B ∗ ) is the unique optimal solution of (1) if
+(b) There exists a dual matrix Q ∈ R n 1 ×n 2 satisfying P Ω c obs (Q) = 0 and
+In this section, we illustrate our results via simulation. In particular, we investigate how the algorithm performs as the size of the low-rank matrix gets larger. In other words, we try to see how the requirements for the success of our algorithm changes as the size of the matrix grows. These simulation
+results show that the conditions get relaxed more and more as n increases, which matches our theoretical results.
+(1) Minimum Required Observing Probability: We generate a rank two matrix ( r = 2) of size n by multiplying a random n × 2 matrix and a random 2 × n matrix, and then corrupt the entries randomly with probability τ = 0.1, without any adversarial noise ( d = 0). The entries of the corrupted matrix are observed independently with probability p 0 . We then solve (1) using the method in [20]. Success is declared if we recover the low-rank matrix with a relative error less than 10 −6 , measured in Frobenius norm. The experiment is repeated 10 times and we count the frequency of success. For any ﬁxed number n, if we start from p 0 = 1 and decrease p 0 , at some point, the probability of success jumps from one to zero, i.e., we observe a phase transition. In Fig. 1, we plot the p 0 at which the
+phase transition happens versus the size of the matrix. This experiment shows that the phase transition p 0 goes to zero as n increases, as predicted by our theorem.
+(2) Maximum Tolerable Corruption Probability: Similarly as before, we generate an instance with r = 2, p 0 = 0.9 and d = 0 for some n. For a ﬁxed n, if we start from τ = 0 and increase τ , at some point, the probability of success jumps from one to zero. Fig. 2 illustrates how the phase transition τ changes as the size of the matrix increases. This experiment shows that higher probability of corruptions can be tolerated as the size of the matrix increases as predicted by the theorem.
+(3) Maximum Tolerable Adversarial/Deterministic Noise: Similarly as before, we set r = 2, p 0 = 0.5 and τ = 0.1. We add the adversarial noise in the form of a d × d block of 1’s lying on the diagonal of the original matrix. Notice that this is a hard case since all the adversarial corruptions are burst as oppose to be spread over the matrix. We ﬁnd the maximum possible d such that the probability of success to goes from 1 to 0 (phase transition). In Fig. 3, we plot this phase transition d versus the size of the matrix and as the deterministic theorem predicts, it grows linearly in n.
+The authors thank Dr. Huan Xu for insightful discussions and comments.
+[[[ REFS ]]]
+E. J. Candes
+X. Li
+Y. Ma
+J. Wright
+--
+Robust principal component analysis?
+----
+H. Xu
+C. Caramanis
+S. Sanghavi
+--
+Robust PCA via outlier pursuit
+----
+
+--
+Robust PCA via outlier pursuit
+----
+A. Jalali
+Y. Chen
+S. Sanghavi
+H. Xu
+--
+Clustering partially ob- served graphs via convex optimization
+----
+
+--
+Clustering partially observed graphs via convex optimization
+----
+A. Ng
+M. Jordan
+Y. Weiss
+--
+On spectral clustering: Analysis and an algorithm
+----
+J. Shi
+J. Malik
+--
+Normalized cuts and image segmentation
+----
+Y. Chen
+H. Xu
+C. Caramanis
+S. Sanghavi
+--
+Robust matrix completion and corrupted columns
+----
+
+--
+Robust matrix completion with corrupted columns
+----
+P. Hube
+--
+Robust Statistics
+----
+E. J. Candes
+B. Recht
+--
+Exact matrix completion via convex optimzation
+----
+E. J. Candes
+T. Tao
+--
+The power of convex relaxation: Near-optimal matrix completion
+----
+V. Chandrasekaran
+S. Sanghavi
+P. Parrilo
+A. S. Willsky
+--
+Rank- sparsity incoherence for matrix decomposition
+----
+D. Hsu
+S. Kakade
+T. Zhang
+--
+Robust matrix decomposition with outliers
+----
+A. Ganesh
+J. Wright
+X. Li
+E. Candes
+Y. Ma
+--
+Dense error correction for low-rank matrices via principal component pursuit
+----
+D. Gross
+--
+Recovering low-rank matrices from few coefﬁcients in any basis
+----
+V. Chandrasekaran
+S. Sanghavi
+P. Parrilo
+A. S. Willsky
+--
+Sparse and low-rank matrix decompositions
+----
+B. Recht
+--
+A Simpler Approach to Matrix Completion
+----
+Y. Chen
+A. Jalali
+S. Sanghavi
+C. Caramanis
+--
+Low-rank matrix recovery from errors and erasures
+----
+Z. Lin
+M. Chen
+L. Wu
+Y. Ma
+--
+The Augmented Lagrange Mul- tiplier Method for Exact Recovery of Corrupted Low-Rank Matrices
+[[[ META ]]]
+parsed -> yes
+file -> files\277.pdf
+[[[ LINKS ]]]
+

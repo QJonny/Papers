@@ -1,0 +1,41 @@
+@(papers: List[String])
+
+@import helper._
+
+@main(""){
+	<h3> Upload new file : </h3>
+	@form(routes.Application.upload, 'enctype -> "multipart/form-data") {
+		<input type="file" name="paper" />
+		<input type="submit" value="Upload" />
+	}
+
+	<br/><br/>
+	<h3> List of uploaded files : </h3>
+	<ul>
+        @papers.map { paper =>
+            <li>
+                <h5>@paper</h5>
+                @form(routes.Application.parse(paper)) {
+                    <input type="submit" value="Parse">
+                }
+                @form(routes.Application.schedule(paper)) {
+                    <input type="submit" value="Schedule">
+                }
+				@form(routes.Application.extend(paper)) {
+                    <input type="submit" value="Extend">
+                }
+				-------------------------------------------------
+            </li>
+        }
+    </ul>
+	
+	<br/><br/>
+	<h3> Apply common processing : </h3>
+	@form(routes.Application.comparePapers) {
+		<input type="submit" value="Compare Papers" />
+	}
+	
+	@form(routes.Application.createGraph) {
+		<input type="submit" value="Create Graph" />	
+	}
+}

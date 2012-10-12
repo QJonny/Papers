@@ -1,0 +1,26 @@
+{
+"nodes":[
+  {"id":1,
+   "title":"List Decoding of Polar Codes",
+   "authors":"Ido Tal, Alexander Vardy",
+   "pdf":"files\\001.pdf",
+   "date":"-",
+   "room":"-"},
+  {"id":1569565357,
+   "title":"An Outer Bound for the Vector Gaussian CEO Problem",
+   "authors":"Ersen Ekrem, Sennur Ulukus",
+   "pdf":"files\\1569565357.pdf",
+   "date":"-",
+   "room":"-"},
+  {"id":277,
+   "title":"Low-rank Matrix Recovery from Errors and Erasures",
+   "authors":"Yudong Chen, Ali Jalali, Sujay Sanghavi, Constantine Caramanis",
+   "pdf":"files\\277.pdf",
+   "date":"-",
+   "room":"-"}
+],
+"links":[
+  
+]
+
+}

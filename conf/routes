@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+#Tasks
+GET		/tasks/compare						controllers.Application.comparePapers
+GET		/tasks/graph						controllers.Application.createGraph
+POST	/tasks/upload						controllers.Application.upload
+POST	/tasks/:paper/parse					controllers.Application.parse(paper: String)
+POST	/tasks/:paper/schedule				controllers.Application.schedule(paper: String)
+POST	/tasks/:paper/extend				controllers.Application.extend(paper: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
